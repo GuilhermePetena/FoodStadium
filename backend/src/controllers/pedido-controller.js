@@ -12,27 +12,27 @@ exports.getAllPedido = function(req, res) {
         }
         console.log('SUCESSO!')
         const response = {
-         pedidos: result.map(pedido => {
-        return {
-            idproduto_pedido: pedido.idproduto_pedido,
-            pedido: {
-                idpedido: pedido.idpedido,
-                data: pedido.data, 
-                hora: pedido.hora
-            },
-            produto: {
-                idproduto: pedido.idproduto,
-                nome: pedido.nome,
-                preco: pedido.preco,
-                quantidade: pedido.quantidade,
-                imagem: pedido.imagem
-            },
-           quantidade: pedido.quantidade,
-           observacao: pedido.observacao
+            pedidos: result.map(pedido => {
+                return {
+                    idproduto_pedido: pedido.idproduto_pedido,
+                    pedido: {
+                        idpedido: pedido.idpedido,
+                        data: pedido.data,
+                        hora: pedido.hora
+                    },
+                    produto: {
+                        idproduto: pedido.idproduto,
+                        nome: pedido.nome,
+                        preco: pedido.preco,
+                        quantidade: pedido.quantidade,
+                        imagem: pedido.imagem
+                    },
+                    quantidade: pedido.quantidade,
+                    observacao: pedido.observacao
+                }
+            })
         }
-      })
-     }
-     return res.status(200).send(response)
+        return res.status(200).send(response)
     })
 }
 
@@ -53,7 +53,7 @@ exports.getPedido = function(req, res) {
 
 }
 
-exports.postPedido = function(req, res){
+exports.postPedido = function(req, res) {
     const queryString = "INSERT INTO pedido (data, hora) VALUES (CURDATE(),CURTIME())"
     pool.query(queryString, (err, results, fields) => {
         if (err) {
@@ -66,7 +66,7 @@ exports.postPedido = function(req, res){
     })
 }
 
-exports.deletePedido = function(req, res){
+exports.deletePedido = function(req, res) {
     const pedidoId = req.params.id
     const queryString = "DELETE FROM pedido WHERE idpedido = ?;"
     pool.query(queryString, [pedidoId], (err, rows, fields) => {
@@ -94,4 +94,3 @@ exports.putPedido = function(req, res) {
         res.json(rows)
     })
 }
-
