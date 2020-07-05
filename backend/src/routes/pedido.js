@@ -8,6 +8,6 @@ router.get('/', PedidoController.getAllPedido)
 router.get('/:id', PedidoController.getPedido)
 router.post("/", PedidoController.postPedido)
 router.delete('/:id', PedidoController.deletePedido)
-router.put('/', PedidoController.putPedido)
+router.patch('/', PedidoController.putPedido)
 
 module.exports = router

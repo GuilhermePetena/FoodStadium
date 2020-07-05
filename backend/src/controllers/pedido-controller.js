@@ -10,7 +10,7 @@ exports.getAllPedido = function(req, res) {
             res.end()
             return
         }
-        console.log('SUCESSO!')
+        console.log('SUCESSO!!')
         const response = {
             pedidos: result.map(pedido => {
                 return {
@@ -90,7 +90,6 @@ exports.putPedido = function(req, res) {
             res.end()
             return
         }
-        console.log('SUCESSO!')
-        res.json(rows)
+        res.send("PEDIDO ALTERADO COM SUCESSO")
     })
 }

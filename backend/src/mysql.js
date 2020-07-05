@@ -5,7 +5,8 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'senha',
-    database: 'teste'
+    database: 'db_foodstadium'
 })
+
 
 module.exports = pool

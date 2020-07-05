@@ -12,7 +12,6 @@ exports.getAllProdutos = function(req, res) {
         }
         console.log('SUCESSO!')
         res.json(rows)
-        console.log(req.body)
     })
 
 }
@@ -41,10 +40,10 @@ exports.postProduto = function(req, res) {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
+            res.end()
             return
         }
         res.send('PRODUTO INSERIDO COM SUCESSO')
-        res.end()
     })
 }
 
@@ -73,6 +72,5 @@ exports.putProduto = function(req, res) {
             return
         }
         res.send('PRODUTO ATUALIZADO COM SUCESSO')
-        res.json(rows)
     })
 }
