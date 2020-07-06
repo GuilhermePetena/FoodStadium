@@ -34,8 +34,8 @@ exports.getBloco = function(req, res) {
 }
 
 exports.postBloco = function(req, res) {
-    const queryString = "INSERT INTO bloco (nome, numero) VALUES (?, ?)"
-    pool.query(queryString, [req.body.nome, req.body.numero], (err, results, fields) => {
+    const queryString = "INSERT INTO bloco (nomeBloco, numero) VALUES (?, ?)"
+    pool.query(queryString, [req.body.nomeBloco, req.body.numero], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -57,13 +57,13 @@ exports.deleteBloco = function(req, res) {
             return
         }
         res.send('BLOCO DELETADO COM SUCESSO')
-        res.json(rows)
+
     })
 }
 
 exports.putBloco = function(req, res) {
-    const queryString = "UPDATE bloco SET nome = ?, numero = ?  WHERE idbloco = ?;"
-    pool.query(queryString, [req.body.nome, req.body.numero, req.body.idbloco], (err, rows, fields) => {
+    const queryString = "UPDATE bloco SET nomeBloco = ?, numero = ?  WHERE idbloco = ?;"
+    pool.query(queryString, [req.body.nomeBloco, req.body.numero, req.body.idbloco], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)

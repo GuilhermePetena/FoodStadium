@@ -34,8 +34,8 @@ exports.getLocal = function(req, res) {
 }
 
 exports.postLocal = function(req, res) {
-    const queryString = "INSERT INTO local (nome, email, telefone, endereco) VALUES (?, ?, ?, ?)"
-    pool.query(queryString, [req.body.nome, req.body.email, req.body.telefone, req.body.endereco], (err, results, fields) => {
+    const queryString = "INSERT INTO local (nomeLocal, email, telefone, endereco) VALUES (?, ?, ?, ?)"
+    pool.query(queryString, [req.body.nomeLocal, req.body.email, req.body.telefone, req.body.endereco], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -58,13 +58,12 @@ exports.deleteLocal = function(req, res) {
             return
         }
         res.send('LOCAL DELETADO COM SUCESSO')
-        res.json(rows)
     })
 }
 
 exports.putLocal = function(req, res) {
-    const queryString = "UPDATE local SET nome = ?, email = ?, telefone = ?, endereco = ? WHERE idlocal = ?;"
-    pool.query(queryString, [req.body.nome, req.body.email, req.body.telefone, req.body.endereco, req.body.idlocal], (err, rows, fields) => {
+    const queryString = "UPDATE local SET nomeLocal = ?, email = ?, telefone = ?, endereco = ? WHERE idlocal = ?;"
+    pool.query(queryString, [req.body.nomeLocal, req.body.email, req.body.telefone, req.body.endereco, req.body.idlocal], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)

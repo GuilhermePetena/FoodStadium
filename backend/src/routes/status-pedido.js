@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('mysql')
 
-const StatusPedidoController = require('../controllers/bloco-controller.js')
+const StatusPedidoController = require('../controllers/status-pedido-controller.js')
 
 router.get('/', StatusPedidoController.getAllStatusPedido)
 router.get('/:id', StatusPedidoController.getStatusPedido)

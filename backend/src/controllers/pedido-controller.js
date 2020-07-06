@@ -62,7 +62,6 @@ exports.postPedido = function(req, res) {
             return
         }
         console.log('INSERIDO DO PEDIDO ID: ' + req.body.idpedido)
-        res.end()
     })
 }
 

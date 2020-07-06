@@ -34,8 +34,8 @@ exports.getCategoria = function(req, res) {
 }
 
 exports.postCategoria = function(req, res) {
-    const queryString = "INSERT INTO categoria (nome) VALUES (?)"
-    pool.query(queryString, [req.body.nome], (err, results, fields) => {
+    const queryString = "INSERT INTO categoria (nomeCategoria) VALUES (?)"
+    pool.query(queryString, [req.body.nomeCategoria], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -57,13 +57,13 @@ exports.deleteCategoria = function(req, res) {
             return
         }
         res.send('CATEGORIA DELETADO COM SUCESSO')
-        res.json(rows)
+
     })
 }
 
 exports.putCategoria = function(req, res) {
-    const queryString = "UPDATE categoria SET nome = ? WHERE idcategoria = ?;"
-    pool.query(queryString, [req.body.nome, req.body.idcategoria], (err, rows, fields) => {
+    const queryString = "UPDATE categoria SET nomeCategoria = ? WHERE idcategoria = ?;"
+    pool.query(queryString, [req.body.nomeCategoria, req.body.idcategoria], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)

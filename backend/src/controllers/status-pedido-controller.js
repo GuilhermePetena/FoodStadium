@@ -34,8 +34,8 @@ exports.getStatusPedido = function(req, res) {
 }
 
 exports.postStatusPedido = function(req, res) {
-    const queryString = "INSERT INTO status_pedido (nome) VALUES (?)"
-    pool.query(queryString, [req.body.nome], (err, results, fields) => {
+    const queryString = "INSERT INTO status_pedido (idstatus, idpedido, data_inicio_status) VALUES (?, ?, ?)"
+    pool.query(queryString, [req.body.idstatus, req.body.idpedido, req.body.data_inicio_status], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatusPedido(500)
@@ -57,13 +57,12 @@ exports.deleteStatusPedido = function(req, res) {
             return
         }
         res.send('STATUS_PEDIDO DELETADO COM SUCESSO')
-        res.json(rows)
     })
 }
 
 exports.putStatusPedido = function(req, res) {
-    const queryString = "UPDATE status_pedido SET nome = ? WHERE idstatus_pedido = ?;"
-    pool.query(queryString, [req.body.nome, req.body.idstatus_pedido], (err, rows, fields) => {
+    const queryString = "UPDATE status_pedido SET idstatus = ?, idpedido = ?, data_inicio_status = ? WHERE idstatus_pedido = ?;"
+    pool.query(queryString, [req.body.idstatus, req.body.idpedido, req.body.data_inicio_status, req.body.idstatus_pedido], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatusPedido(500)

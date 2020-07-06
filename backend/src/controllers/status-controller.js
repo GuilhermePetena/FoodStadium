@@ -34,8 +34,8 @@ exports.getStatus = function(req, res) {
 }
 
 exports.postStatus = function(req, res) {
-    const queryString = "INSERT INTO status (nome) VALUES (?)"
-    pool.query(queryString, [req.body.nome], (err, results, fields) => {
+    const queryString = "INSERT INTO status (nomeStatus) VALUES (?)"
+    pool.query(queryString, [req.body.nomeStatus], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -57,13 +57,13 @@ exports.deleteStatus = function(req, res) {
             return
         }
         res.send('STATUS DELETADO COM SUCESSO')
-        res.json(rows)
+
     })
 }
 
 exports.putStatus = function(req, res) {
-    const queryString = "UPDATE status SET nome = ? WHERE idstatus = ?;"
-    pool.query(queryString, [req.body.nome, req.body.idstatus], (err, rows, fields) => {
+    const queryString = "UPDATE status SET nomeStatus = ? WHERE idstatus = ?;"
+    pool.query(queryString, [req.body.nomeStatus, req.body.idstatus], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)

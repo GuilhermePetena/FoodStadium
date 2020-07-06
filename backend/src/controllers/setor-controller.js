@@ -34,8 +34,8 @@ exports.getSetor = function(req, res) {
 }
 
 exports.postSetor = function(req, res) {
-    const queryString = "INSERT INTO setor (nome) VALUES (?)"
-    pool.query(queryString, [req.body.nome], (err, results, fields) => {
+    const queryString = "INSERT INTO setor (nomeSetor) VALUES (?)"
+    pool.query(queryString, [req.body.nomeSetor], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -57,13 +57,12 @@ exports.deleteSetor = function(req, res) {
             return
         }
         res.send('SETOR DELETADO COM SUCESSO')
-        res.json(rows)
     })
 }
 
 exports.putSetor = function(req, res) {
-    const queryString = "UPDATE setor SET nome = ? WHERE idsetor = ?;"
-    pool.query(queryString, [req.body.nome, req.body.idsetor], (err, rows, fields) => {
+    const queryString = "UPDATE setor SET nomeSetor = ? WHERE idsetor = ?;"
+    pool.query(queryString, [req.body.nomeSetor, req.body.idsetor], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)

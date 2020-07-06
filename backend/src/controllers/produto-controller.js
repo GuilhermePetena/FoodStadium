@@ -2,8 +2,8 @@ const express = require('express')
 const pool = require('../mysql')
 
 exports.getAllProdutos = function(req, res) {
-    const queryString = "SELECT * FROM produto;"
-    pool.query(queryString, (err, rows, fields) => {
+    const queryString = "SELECT * FROM produto AS p JOIN categoria AS c ON p.idcategoria = c.idcategoria"
+    pool.query(queryString, (err, result, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -11,7 +11,21 @@ exports.getAllProdutos = function(req, res) {
             return
         }
         console.log('SUCESSO!')
-        res.json(rows)
+        const response = {
+            produtos: result.map(produto => {
+                return {
+                    produto: {
+                        idproduto: produto.idproduto,
+                        nomeProduto: produto.nomeProduto,
+                        categoria: {
+                            idcategoria: produto.idcategoria,
+                            nomeCategoria: produto.nomeCategoria
+                        }
+                    }
+                }
+            })
+        }
+        return res.status(200).send(response)
     })
 
 }
@@ -19,8 +33,8 @@ exports.getAllProdutos = function(req, res) {
 exports.getProduto = function(req, res) {
     console.log("Esse é o id: " + req.params.id)
     const produtoId = req.params.id
-    const queryString = "SELECT * FROM produto WHERE idproduto = ?;"
-    pool.query(queryString, [produtoId], (err, rows, fields) => {
+    const queryString = "SELECT * FROM produto AS p JOIN categoria AS c ON p.idcategoria = c.idcategoria WHERE p.idproduto = ?"
+    pool.query(queryString, [produtoId], (err, result, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -28,15 +42,24 @@ exports.getProduto = function(req, res) {
             return
         }
         console.log('SUCESSO!')
-        res.json(rows)
-            // console.log(rows[0].idproduto, rows[0].nome, rows[0].preco, rows[0].imagem)
+        const response = {
+            produto: {
+                idproduto: result[0].idproduto,
+                nomeProduto: result[0].nomeProduto,
+                categoria: {
+                    idcategoria: result[0].idcategoria,
+                    nomeCategoria: result[0].nomeCategoria
+                }
+            }
+        }
+        return res.status(200).send(response)
     })
 
 }
 
 exports.postProduto = function(req, res) {
-    const queryString = "INSERT INTO produto (nome, preco, imagem) VALUES (?, ?, ?)"
-    pool.query(queryString, [req.body.nome, req.body.preco, req.body.imagem], (err, results, fields) => {
+    const queryString = "INSERT INTO produto (nomeProduto, idcategoria) VALUES (?, ?)"
+    pool.query(queryString, [req.body.nomeProduto, req.body.idcategoria], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -58,13 +81,13 @@ exports.deleteProduto = function(req, res) {
             return
         }
         res.send('PRODUTO DELETADO COM SUCESSO')
-        res.json(rows)
+
     })
 }
 
 exports.putProduto = function(req, res) {
-    const queryString = "UPDATE produto SET nome = ?, preco = ?, imagem = ? WHERE idproduto = ?;"
-    pool.query(queryString, [req.body.nome, req.body.preco, req.body.imagem, req.body.idproduto], (err, rows, fields) => {
+    const queryString = "UPDATE produto SET nomeProduto = ? WHERE idproduto = ?;"
+    pool.query(queryString, [req.body.nomeProduto, req.body.idproduto], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
