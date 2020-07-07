@@ -2,8 +2,8 @@ const express = require('express')
 const pool = require('../mysql')
 
 exports.getAllPedido = function(req, res) {
-    const queryString = "select * from produto_pedido pp join pedido p on pp.idpedido = p.idpedido join produto prod on prod.idproduto = pp.idproduto"
-    pool.query(queryString, (err, result, fields) => {
+    const queryString = "select * from pedido;"
+    pool.query(queryString, (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -11,28 +11,7 @@ exports.getAllPedido = function(req, res) {
             return
         }
         console.log('SUCESSO!!')
-        const response = {
-            pedidos: result.map(pedido => {
-                return {
-                    idproduto_pedido: pedido.idproduto_pedido,
-                    pedido: {
-                        idpedido: pedido.idpedido,
-                        data: pedido.data,
-                        hora: pedido.hora
-                    },
-                    produto: {
-                        idproduto: pedido.idproduto,
-                        nome: pedido.nome,
-                        preco: pedido.preco,
-                        quantidade: pedido.quantidade,
-                        imagem: pedido.imagem
-                    },
-                    quantidade: pedido.quantidade,
-                    observacao: pedido.observacao
-                }
-            })
-        }
-        return res.status(200).send(response)
+        res.json(rows)
     })
 }
 
@@ -54,8 +33,8 @@ exports.getPedido = function(req, res) {
 }
 
 exports.postPedido = function(req, res) {
-    const queryString = "INSERT INTO pedido (data, hora) VALUES (CURDATE(),CURTIME())"
-    pool.query(queryString, (err, results, fields) => {
+    const queryString = "INSERT INTO pedido (data, hora, idcliente, identregador_local_setor, idcliente_local_setor, idtipo_entrega, idrestaurante) VALUES (?,?,?,?,?,?,?)"
+    pool.query(queryString, [req.body.data, req.body.hora, req.body.idcliente, req.body.idcliente_local_setor, req.body.idtipo_entrega, req.body.idrestaurante], (err, results, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
@@ -81,8 +60,8 @@ exports.deletePedido = function(req, res) {
 }
 
 exports.putPedido = function(req, res) {
-    const queryString = "UPDATE pedido SET observacao = ? WHERE idpedido = ?;"
-    pool.query(queryString, [req.body.observacao, req.body.idpedido], (err, rows, fields) => {
+    const queryString = "UPDATE pedido SET data = ?, hora = ?, idcliente = ?, identregador_local_setor = ?, idcliente_local_setor = ?, idtipo_entrega = ?, idrestaurante = ? WHERE idpedido = ?;"
+    pool.query(queryString, [req.body.data, req.body.hora, req.body.idcliente, req.body.idcliente_local_setor, req.body.idtipo_entrega, req.body.idrestaurante, req.body.idpedido], (err, rows, fields) => {
         if (err) {
             console.log('Erro: ' + err)
             res.sendStatus(500)
