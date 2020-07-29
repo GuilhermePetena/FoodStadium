@@ -3,7 +3,7 @@ import React,{Component, useState} from 'react'
 import {StyleSheet, View,FlatList, TouchableOpacity} from 'react-native'
 import {Text,Avatar,Divider  } from 'react-native-paper';
 import Navbar from '../components/Navbar'
-import Cartoes from '../screens/Cartoes'
+import AvatarCliente from '../components/Avatar'
 
 
 export default class Perfil extends Component {
@@ -23,16 +23,14 @@ export default class Perfil extends Component {
             </TouchableOpacity> 
           );
 
-          const Imagem = () => (
-            <Avatar.Text size={80} label="SO" />
-          );
+         
           
         return(
             <>
                 
                 <View style={styles.viewInicio}>
                     <View style={styles.titulo}>      
-                        <Imagem></Imagem>
+                        <AvatarCliente></AvatarCliente>
                         <Text style={styles.txtPerfil}>PERFIL</Text>
                     </View> 
                     <View style={styles.corpo}>    
