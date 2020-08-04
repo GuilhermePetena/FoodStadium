@@ -4,7 +4,7 @@ import { Text,Button } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-export default class Localizacao extends Component {
+export default class MenuInicial extends Component {
 
     
 
