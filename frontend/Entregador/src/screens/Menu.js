@@ -1,32 +1,48 @@
-import React,{Component, useState} from 'react'
-import {StyleSheet, View,ImageBackground, ScrollView} from 'react-native'
-import { TextInput ,Text,Button,Searchbar } from 'react-native-paper';
+import React,{Component} from 'react'
+import {StyleSheet, View, Image} from 'react-native'
+import { Text,Button } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import teste from '../../../assets/imgs/logo.png'
+import Cabecalho from '../../components/Cabecalho'
+
 
 export default class Menu extends Component {
+
+    
 
     render(){
 
         return(
-          <ScrollView>
+            <ScrollView>
             <View style={styles.background}>
+                <View style={styles.viewImage}>
+                    <Image source={teste} style={styles.image}></Image>
+                </View>
                 <View style={styles.viewTitle}>
-                    <Text style={styles.title}> Menu </Text>
+                    <Text style={styles.title}>Menu</Text>        
                 </View>
-                <View  style={styles.viewCadastro}>
-                <View  style={styles.viewSearch}>
-                        <Searchbar style={styles.search} placeholder="Estádio" />
-                    </View>
-                    <View style={styles.viewText}>
-                        <TextInput style={styles.text} underlineColor="#F2A22C" selectionColor="#F2A22C" label="Setor"/>
-                    </View>
-                    <View style={styles.viewText}>
-                        <TextInput style={styles.text} underlineColor="#F2A22C" selectionColor="#F2A22C" label="Bloco"/>
-                    </View>
+                <View  style={styles.viewCorpo}>
+                    <Button style={styles.button} mode= 'contained' onPress={() => this.props.navigation.navigate('Default')} >
+                        Entregas
+                    </Button>
                 </View>
+                <View  style={styles.viewCorpo}>      
+                    <Button style={styles.button} mode= 'contained' onPress={() => this.props.navigation.navigate('Default')} >
+                        Pedidos
+                    </Button>  
+                </View> 
+                <View  style={styles.viewCorpo}>      
+                    <Button style={styles.button} mode= 'contained' onPress={() => this.props.navigation.navigate('Default')} >
+                        Avaliações e Comentários
+                    </Button>
+                </View>
+                         
+                
             </View>
-          </ScrollView>
+            </ScrollView>
             
-        )  
+        )
+       
     }
 }
 
@@ -34,17 +50,13 @@ const styles = StyleSheet.create({
     viewTitle:{
         flex:1,
         alignItems:'center',
-        justifyContent:'center',   
-    },
-    viewText:{
-        flexDirection:'row',
         justifyContent:'center',
-        width:'100%'
+        marginTop:30,
+        marginBottom:20
     },
-    viewCadastro:{
-        flex:4,
-        width:'100%',
-        alignItems:'flex-start',
+    viewCorpo:{
+        alignItems:'center',
+        marginBottom:20
     },
     title:{
         color:'black',
@@ -57,26 +69,27 @@ const styles = StyleSheet.create({
         width:'60%'
     },
     button:{
-        backgroundColor:'#F2A22C'
+        backgroundColor:'#F2A22C',
     },
-    input:{
-        backgroundColor:'blue'
-    },
+
     background:{
-        flex:1,
+        flex:3,
         width:'100%',
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#FFF'
     },
-    viewSearch:{
-      flexDirection:'row',
-      justifyContent:'center',
-      width:'100%'
-  }, 
-  search:{
-      marginBottom:20,
-      width:'60%'
-  }
+    image:{
+        width:235,
+        height:164,
+    },
+    viewImage:{
+        width:'80%',
+        marginLeft:'12%',
+        marginRight:'10%',
+        marginBottom:'5%',
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop:'20%',
+      }
     
 })
