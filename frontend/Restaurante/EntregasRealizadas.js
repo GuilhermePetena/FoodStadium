@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar'
 import Cabecalho from '../../components/Cabecalho'
 
 
-export default class ProdutosCadastrados extends Component {
+export default class EntregasRealizadas extends Component {
     
     render(){
         const renderItem = ({ item }) => (
@@ -40,6 +40,7 @@ export default class ProdutosCadastrados extends Component {
           
         return(
             <>
+              <ScrollView>
                 <View style={styles.viewInicio}>
                   <View style={styles.cabecalho}>
                     <Cabecalho></Cabecalho>
@@ -57,6 +58,7 @@ export default class ProdutosCadastrados extends Component {
                         
                     </View>
                 </View>
+                </ScrollView>
             </> 
         )
            
