@@ -2,11 +2,11 @@
 import React,{Component, useState} from 'react'
 import {StyleSheet, View,FlatList, TouchableOpacity} from 'react-native'
 import {Text,Searchbar,Button } from 'react-native-paper';
-import Navbar from '../components/Navbar'
-import Cabecalho from '../components/Cabecalho'
+import Navbar from '../../components/Navbar'
+import Cabecalho from '../../components/Cabecalho'
 
 
-export default class ProdutosCadastrados extends Component {
+export default class PedidosAndamento extends Component {
     
     render(){
         const renderItem = ({ item }) => (
@@ -40,11 +40,13 @@ export default class ProdutosCadastrados extends Component {
           
         return(
             <>
+              
                 <View style={styles.viewInicio}>
                   <View style={styles.cabecalho}>
                     <Cabecalho></Cabecalho>
                     <Text style={styles.txtRestaurante}>Pedidos</Text>
                     </View>
+                    <ScrollView>
                     <View style={styles.viewList}>
                     <Text style={styles.txtRestaurante}>Pedidos em Andamento</Text>
                         <FlatList
@@ -59,7 +61,9 @@ export default class ProdutosCadastrados extends Component {
                             keyExtractor={item => item.id}
                         />  
                     </View>
+                    </ScrollView>
                 </View>
+                
             </> 
         )
            
