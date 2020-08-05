@@ -2,8 +2,8 @@
 import React,{Component, useState} from 'react'
 import {StyleSheet, View,FlatList, TouchableOpacity} from 'react-native'
 import {Text,Searchbar,Button } from 'react-native-paper';
-import Navbar from '../components/Navbar'
-import Cabecalho from '../components/Cabecalho'
+import Navbar from '../../components/Navbar'
+import Cabecalho from '../../components/Cabecalho'
 
 
 export default class ProdutosCadastrados extends Component {
@@ -40,6 +40,7 @@ export default class ProdutosCadastrados extends Component {
           
         return(
             <>
+              <ScrollView>
                 <View style={styles.viewInicio}>
                   <View style={styles.cabecalho}>
                     <Cabecalho></Cabecalho>
@@ -57,6 +58,7 @@ export default class ProdutosCadastrados extends Component {
                         
                     </View>
                 </View>
+                </ScrollView>
             </> 
         )
            
