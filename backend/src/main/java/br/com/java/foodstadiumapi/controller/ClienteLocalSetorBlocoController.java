@@ -3,19 +3,24 @@ package br.com.java.foodstadiumapi.controller;
 import br.com.java.foodstadiumapi.model.Cliente;
 import br.com.java.foodstadiumapi.model.ClienteLocalSetorBloco;
 import br.com.java.foodstadiumapi.model.LocalSetorBloco;
+import br.com.java.foodstadiumapi.model.dto.ClienteLocalSetorBlocoDTO;
+import br.com.java.foodstadiumapi.model.form.ClienteLocalSetorBlocoForm;
+import br.com.java.foodstadiumapi.model.form.ClienteForm;
 import br.com.java.foodstadiumapi.repository.ClienteLocalSetorBlocoRepository;
 import br.com.java.foodstadiumapi.repository.ClienteRepository;
 import br.com.java.foodstadiumapi.repository.LocalSetorBlocoRepository;
 import io.swagger.annotations.ApiOperation;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -27,51 +32,76 @@ public class ClienteLocalSetorBlocoController {
     private ClienteRepository clienteRepository;
     @Autowired
     private LocalSetorBlocoRepository localSetorBlocoRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @ApiOperation(value = "Listar locais do cliente")
     @GetMapping("/clientes/local")
-    public List<ClienteLocalSetorBloco> listar() {
-        return repository.findAll();
+    public List<ClienteLocalSetorBlocoDTO> listar() {
+        return paraListaModel(repository.findAll());
     }
 
     @ApiOperation(value = "Detalhes do local do cliente")
     @GetMapping("/clientes/local/{id}")
-    public Optional<ClienteLocalSetorBloco> detalhes(@PathVariable Long id) {
-        return repository.findById(id);
+    public ResponseEntity<ClienteLocalSetorBlocoDTO> detalhes(@PathVariable Long id) {
+
+        Optional<ClienteLocalSetorBloco> clienteLocalSetorBloco = repository.findById(id);
+        if (clienteLocalSetorBloco.isPresent()){
+            ClienteLocalSetorBlocoDTO clienteLocalSetorBlocoDTO = paraModel(clienteLocalSetorBloco.get());
+            return ResponseEntity.ok(clienteLocalSetorBlocoDTO);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @ApiOperation(value = "Cadastrar local do cliente")
-    @PostMapping("clientes/local")
-    public ResponseEntity<ClienteLocalSetorBloco> cadastrar(@RequestBody ClienteLocalSetorBloco clienteLocalSetorBloco, UriComponentsBuilder uriBuilder) throws Exception {
-        Cliente cliente = clienteRepository.findById(clienteLocalSetorBloco.getCliente().getId())
+    @PostMapping(value = "clientes/local",produces="application/json", consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public  ClienteLocalSetorBlocoDTO cadastrar(@RequestBody ClienteLocalSetorBlocoForm clienteLocalSetorBlocoForm) throws Exception {
+        ClienteLocalSetorBloco clienteLocalSetorBloco = paraEntity(clienteLocalSetorBlocoForm);
+        Cliente cliente = clienteRepository.findById(clienteLocalSetorBlocoForm.getCliente().getId())
                 .orElseThrow(Exception::new);
-        LocalSetorBloco localSetorBloco = localSetorBlocoRepository.findById(clienteLocalSetorBloco.getLocalSetorBloco().getId())
+        LocalSetorBloco localSetorBloco = localSetorBlocoRepository.findById(clienteLocalSetorBlocoForm.getLocalSetorBloco().getId())
                 .orElseThrow(Exception::new);
         clienteLocalSetorBloco.setLocalSetorBloco(localSetorBloco);
         clienteLocalSetorBloco.setCliente(cliente);
         clienteLocalSetorBloco.setDataPresente(LocalDate.now());
-        repository.save(clienteLocalSetorBloco);
-        URI uri = uriBuilder.path("clientes/local/{id}").buildAndExpand(clienteLocalSetorBloco.getId()).toUri();
-        return ResponseEntity.created(uri).body(clienteLocalSetorBloco);
+        return paraModel(repository.save(clienteLocalSetorBloco));
     }
 
     @ApiOperation(value = "Atualizar local do cliente")
-    @PutMapping("clientes/local/{id}")
-    public ClienteLocalSetorBloco atualizar(@RequestBody ClienteLocalSetorBloco novoClienteLocalSetorBloco, @PathVariable Long id){
-        return repository.findById(id)
-                .map(clienteLocalSetorBloco -> {
-                    clienteLocalSetorBloco.setCliente(novoClienteLocalSetorBloco.getCliente());
-                    clienteLocalSetorBloco.setLocalSetorBloco(novoClienteLocalSetorBloco.getLocalSetorBloco());
-                    return repository.save(clienteLocalSetorBloco);
-                })
-                .orElseGet(() -> {
-                    novoClienteLocalSetorBloco.setId(id);
-                    return repository.save(novoClienteLocalSetorBloco);
-                });
+    @PutMapping(value = "clientes/local/{id}",produces="application/json", consumes="application/json" )
+    public ResponseEntity<ClienteLocalSetorBlocoDTO> atualizar(@RequestBody ClienteLocalSetorBlocoForm novoClienteLocalSetorBloco, @PathVariable Long id) throws Exception {
+            ClienteLocalSetorBloco clienteLocalSetorBloco = paraEntity(novoClienteLocalSetorBloco);
+        LocalSetorBloco localSetorBloco = localSetorBlocoRepository.findById(clienteLocalSetorBloco.getLocalSetorBloco().getId())
+                .orElseThrow(Exception::new);
+        clienteLocalSetorBloco.setLocalSetorBloco(localSetorBloco);
+            return repository.findById(id)
+                    .map(clienteLocalSetorBlocoClass -> {
+                        clienteLocalSetorBlocoClass.setLocalSetorBloco(clienteLocalSetorBloco.getLocalSetorBloco());
+                        return ResponseEntity.ok(paraModel(repository.save(clienteLocalSetorBlocoClass)));
+                    })
+                    .orElseGet(() -> {
+                        clienteLocalSetorBloco.setId(id);
+                        return ResponseEntity.ok(paraModel(repository.save(clienteLocalSetorBloco)));
+                    });
     }
+
     @ApiOperation(value = "Deletar local do cliente")
     @DeleteMapping("clientes/local/{id}")
     public void deletar(@PathVariable Long id){
         repository.deleteById(id);
+    }
+
+
+    private ClienteLocalSetorBlocoDTO paraModel(ClienteLocalSetorBloco clienteLocalSetorBloco){
+        return modelMapper.map(clienteLocalSetorBloco, (Type) ClienteLocalSetorBlocoDTO.class);
+    }
+    private List<ClienteLocalSetorBlocoDTO> paraListaModel(List<ClienteLocalSetorBloco> clienteLocalSetorBlocoList){
+        return clienteLocalSetorBlocoList.stream()
+                .map(this::paraModel)
+                .collect(Collectors.toList());
+    }
+    private ClienteLocalSetorBloco paraEntity(ClienteLocalSetorBlocoForm clienteLocalSetorBlocoForm) {
+        return modelMapper.map(clienteLocalSetorBlocoForm, ClienteLocalSetorBloco.class);
     }
 }

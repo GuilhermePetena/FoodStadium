@@ -31,7 +31,7 @@ public class ClienteController {
 
     @ApiOperation(value = "Detalhar cliente")
     @GetMapping("/clientes/{id}")
-    public Optional<Cliente> detalhar(@PathVariable Long id, @PathVariable Long iduser){
+    public Optional<Cliente> detalhar(@PathVariable Long id){
         return clienteRepository.findById(id);
     }
 

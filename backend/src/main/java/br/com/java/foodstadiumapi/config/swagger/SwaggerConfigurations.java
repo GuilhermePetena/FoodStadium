@@ -1,4 +1,4 @@
-package br.com.java.foodstadiumapi.swagger;
+package br.com.java.foodstadiumapi.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

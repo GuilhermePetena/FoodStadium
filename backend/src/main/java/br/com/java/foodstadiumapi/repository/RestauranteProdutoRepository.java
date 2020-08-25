@@ -9,10 +9,12 @@ import java.util.List;
 
 public interface RestauranteProdutoRepository extends JpaRepository<RestauranteProduto, Long> {
 
-    @Query(value = "SELECT * FROM RESTAURANTE as R JOIN RESTAURANTE_PRODUTO as RP on R.ID = RP.RESTAURANTE_ID WHERE RP.RESTAURANTE_ID = ?;",nativeQuery = true)
-    List<RestauranteProduto> findAllRestaurantesProdutos(Long id);
+
+    List<RestauranteProduto> findAllByRestauranteId(Long id);
 
     @Query(value = "SELECT * FROM RESTAURANTE as R JOIN RESTAURANTE_PRODUTO as RP on R.ID = RP.RESTAURANTE_ID WHERE RP.NOME_PERSONALIZADO = ?", nativeQuery = true)
     List<RestauranteProduto> findByNomeDoProduto(String nomeProduto);
+
+    List<RestauranteProduto> findAllByNomePersonalizado(String nomeProduto);
 
 }

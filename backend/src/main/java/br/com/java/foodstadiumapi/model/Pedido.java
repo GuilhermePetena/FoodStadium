@@ -19,6 +19,8 @@ public class Pedido {
     private Long id;
     private LocalDate data;
     private LocalTime hora;
+    private int avaliacaoEntregador;
+    private int avaliacaoPedido;
     @ManyToOne
     private ClienteLocalSetorBloco clienteLocalSetorBloco;
     @ManyToOne

@@ -1,13 +1,18 @@
 package br.com.java.foodstadiumapi.controller;
 
 import br.com.java.foodstadiumapi.model.*;
+import br.com.java.foodstadiumapi.model.dto.PedidoDTO;
+import br.com.java.foodstadiumapi.model.form.PedidoForm;
 import br.com.java.foodstadiumapi.repository.*;
 import io.swagger.annotations.ApiOperation;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,49 +31,83 @@ public class PedidoController {
     @Autowired
     private RestauranteLocalSetorRepository restauranteLocalSetorRepository;
     @Autowired
-    private EntregadorLocalSetorBlocoRepository entregadorLocalSetorBlocoRepository;
+    private EntregadorLocalSetorRepository entregadorLocalSetorRepository;
     @Autowired
     private TipoEntregaRepository tipoEntregaRepository;
     @Autowired
     private StatusRepository statusRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @ApiOperation(value = "Listar pedidos")
-    @GetMapping("/pedidos")
-    public List<Pedido> listar(){
-        return repository.findAll();
+    @GetMapping(value = "/pedidos" ,produces="application/json", consumes="application/json")
+    public List<PedidoDTO> listar(){
+        return paraListaDTO(repository.findAll());
     }
 
     @ApiOperation(value = "Listar pedidos disponiveis para entrega")
-    @GetMapping("/pedidos/listaDisponiveis")
-    public List<Pedido> listarDisponiveis(){
+    @GetMapping(value = "/pedidos/listaDisponiveis",produces="application/json", consumes="application/json")
+    public List<PedidoDTO> listarDisponiveis(){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("ABERTO","ENTREGAR");
         List<Pedido> pedidos = pedido.stream()
               .filter(pedido1 -> pedido1.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(pedido1.getRestauranteLocalSetor().getLocalSetor().getId()))
               .collect(Collectors.toList());
-        return pedidos;
+        return paraListaDTO(pedidos);
     }
 
     @ApiOperation(value = "Listar pedidos entregues por um entregador")
-    @GetMapping("/pedidos/listaEntregados/{id}")
-    public List<Pedido> listarEntregues(@PathVariable Long id){
+    @GetMapping(value = "/pedidos/listaEntregados/{id}",produces="application/json", consumes="application/json")
+    public List<PedidoDTO> listarEntregues(@PathVariable Long id){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregador("ENTREGUE","ENTREGAR", id);
         List<Pedido> pedidos = pedido.stream()
                 .filter(pedido1 -> pedido1.getEntregadorLocalSetor().getEntregador().getId().equals(id))
                 .collect(Collectors.toList());
-        return pedidos;
+        return paraListaDTO(pedidos);
     }
 
 
     @ApiOperation(value = "Detalhar pedido")
-    @GetMapping("/pedidos/{id}")
-    public Optional<Pedido> detalhar(@PathVariable Long id){
-        return repository.findById(id);
+    @GetMapping(value = "/pedidos/{id}",produces="application/json", consumes="application/json")
+    public ResponseEntity<PedidoDTO> detalhar(@PathVariable Long id){
+        Optional<Pedido> optional = repository.findById(id);
+        if (optional.isPresent()){
+            PedidoDTO pedidoDTO = paraDTO(optional.get());
+            return ResponseEntity.ok(pedidoDTO);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @ApiOperation(value = "Cadastrar pedido")
-    @PostMapping("/pedidos")
-    public ResponseEntity<Pedido> cadastrar(@RequestBody Pedido pedido, UriComponentsBuilder uriBuilder) throws Exception {
-        EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorBlocoRepository.findById(pedido.getEntregadorLocalSetor().getId())
+    @PostMapping(value = "/pedidos",produces="application/json", consumes="application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PedidoDTO cadastrar(@RequestBody PedidoForm pedidoForm) throws Exception {
+        Pedido pedido = paraEntity(pedidoForm);
+        EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(pedidoForm.getEntregadorLocalSetor().getId())
+                .orElseThrow(Exception::new);
+        ClienteLocalSetorBloco clienteLocalSetorBloco = clienteLocalSetorBlocoRepository.findById(pedidoForm.getClienteLocalSetorBloco().getId())
+                .orElseThrow(Exception::new);
+        RestauranteLocalSetor restauranteLocalSetor = restauranteLocalSetorRepository.findById(pedidoForm.getRestauranteLocalSetor().getId())
+                .orElseThrow(Exception::new);
+        TipoEntrega tipoEntrega = tipoEntregaRepository.findById(pedidoForm.getTipoEntrega().getId())
+                .orElseThrow(Exception::new);
+        Status status = statusRepository.findById(pedidoForm.getStatus().getId())
+                .orElseThrow(Exception::new);
+        pedido.setStatus(status);
+        pedido.setTipoEntrega(tipoEntrega);
+        pedido.setClienteLocalSetorBloco(clienteLocalSetorBloco);
+        pedido.setEntregadorLocalSetor(entregadorLocalSetor);
+        pedido.setRestauranteLocalSetor(restauranteLocalSetor);
+        pedido.setData(LocalDate.now());
+        pedido.setHora(LocalTime.now());
+
+        return paraDTO(repository.save(pedido));
+    }
+
+    @ApiOperation(value = "Atualizar pedido")
+    @PutMapping(value = "/pedidos/{id}" ,produces="application/json", consumes="application/json")
+    public PedidoDTO atualizar(@RequestBody PedidoForm novoPedido, @PathVariable Long id) throws Exception {
+        Pedido pedido = paraEntity(novoPedido);
+        EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(pedido.getEntregadorLocalSetor().getId())
                 .orElseThrow(Exception::new);
         ClienteLocalSetorBloco clienteLocalSetorBloco = clienteLocalSetorBlocoRepository.findById(pedido.getClienteLocalSetorBloco().getId())
                 .orElseThrow(Exception::new);
@@ -78,26 +117,23 @@ public class PedidoController {
                 .orElseThrow(Exception::new);
         Status status = statusRepository.findById(pedido.getStatus().getId())
                 .orElseThrow(Exception::new);
-        pedido.setData(LocalDate.now());
-        pedido.setHora(LocalTime.now());
-        repository.save(pedido);
-        URI uri = uriBuilder.path("/pedido/{id}").buildAndExpand(pedido.getId()).toUri();
-        return ResponseEntity.created(uri).body(pedido);
-    }
-
-    @ApiOperation(value = "Atualizar pedido")
-    @PutMapping("/pedidos/{id}")
-    public Pedido atualizar(@RequestBody Pedido novoPedido, @PathVariable Long id){
+        pedido.setStatus(status);
+        pedido.setTipoEntrega(tipoEntrega);
+        pedido.setClienteLocalSetorBloco(clienteLocalSetorBloco);
+        pedido.setEntregadorLocalSetor(entregadorLocalSetor);
+        pedido.setRestauranteLocalSetor(restauranteLocalSetor);
         return repository.findById(id)
-                .map(pedido -> {
-                    pedido.setTipoEntrega(novoPedido.getTipoEntrega());
-                    pedido.setEntregadorLocalSetor(novoPedido.getEntregadorLocalSetor());
-                    pedido.setStatus(novoPedido.getStatus());
-                    return repository.save(pedido);
+                .map(pedidoClass -> {
+                    pedidoClass.setTipoEntrega(pedido.getTipoEntrega());
+                    pedidoClass.setEntregadorLocalSetor(pedido.getEntregadorLocalSetor());
+                    pedidoClass.setStatus(pedido.getStatus());
+                    pedidoClass.setAvaliacaoEntregador(pedido.getAvaliacaoEntregador());
+                    pedidoClass.setAvaliacaoPedido(pedido.getAvaliacaoPedido());
+                    return paraDTO(repository.save(pedidoClass));
                 })
                 .orElseGet(() -> {
-                    novoPedido.setId(id);
-                    return repository.save(novoPedido);
+                    pedido.setId(id);
+                    return paraDTO(repository.save(pedido));
                 });
     }
 
@@ -105,5 +141,20 @@ public class PedidoController {
     @DeleteMapping("/pedidos/{id}")
     void deletar(@PathVariable Long id) {
         repository.deleteById(id);
+    }
+
+    private PedidoDTO paraDTO(Pedido pedido){
+        return modelMapper.map(pedido, (Type) PedidoDTO.class);
+    }
+    private List<PedidoDTO> paraListaDTO(List<Pedido> pedidoList){
+        return pedidoList.stream()
+                .map(this::paraDTO)
+                .collect(Collectors.toList());
+    }
+    private Pedido paraEntity(PedidoForm pedidoForm) {
+        return modelMapper.map(pedidoForm, Pedido.class);
+    }
+    private PedidoForm paraForm(Pedido pedido){
+        return modelMapper.map(pedido, PedidoForm.class);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.java.foodstadiumapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -20,7 +21,7 @@ public class Usuario {
     private String email;
     @NotNull
     private String senha;
-    @OneToOne
+    @OneToOne @JsonIgnore
     private Perfil perfil;
 
 }
