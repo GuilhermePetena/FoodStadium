@@ -28,7 +28,7 @@ INSERT INTO CATEGORIA_RESTAURANTE(nome) VALUES ('ARABE');
 -- TABELA CLIENTE,ENTREGADOR, ENTREGADOR FAZ ATÉ CHEGAR 7 DE CADA  (LEMBRA QUE TEM Q ENCAIXAR COM A QUANTIDADE DE USUARIOS)
 INSERT INTO CLIENTE(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('123123','Fulano','Ciclano', '1234-1234', 30,1);
 INSERT INTO CLIENTE(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('123123','Alan','Zica', '1234-1234', 50,4);
-INSERT INTO RESTAURANTE(cnpj,nome, email, telefone, imagem, usuario_id, categoria_restaurante_id) VALUES('123123','FulanoRestaurante','RESTAURANTE@TOP.COM','1234-1234',null, 2,1);
+INSERT INTO RESTAURANTE(cnpj,nome, email, telefone, imagem, usuario_id, categoria_restaurante_id) VALUES('123123','Fulano Restaurante','RESTAURANTE@TOP.COM','1234-1234',null, 2,1);
 INSERT INTO RESTAURANTE(cnpj,nome, email, telefone, imagem, usuario_id, categoria_restaurante_id) VALUES('123123','JubileuRestaurante','RESTAURANTE@TOP.COM','1234-1234',null, 5,2);
 INSERT INTO ENTREGADOR(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('123123','Beltrano','Ciclano', '1234-1234', 40,3);
 
