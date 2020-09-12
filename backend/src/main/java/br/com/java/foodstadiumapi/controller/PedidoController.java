@@ -54,6 +54,13 @@ public class PedidoController {
               .collect(Collectors.toList());
         return paraListaDTO(pedidos);
     }
+    
+    @ApiOperation(value = "Listar pedidos realizados pelo cliente passando ID DO CLIENTE e status como parametro")
+    @GetMapping(value = "/pedidos/listaPedidosRealizados/{id}",produces="application/json", consumes="application/json")
+    public List<PedidoDTO> listaPedidosRealizados(@PathVariable Long id, @PathParam(value = "status") String status){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndClienteLocalSetorBloco_Cliente(status, id);
+        return paraListaDTO(pedido);
+    }
 
     @ApiOperation(value = "Listar pedidos entregues por um entregador")
     @GetMapping(value = "/pedidos/listaEntregados/{id}",produces="application/json", consumes="application/json")
