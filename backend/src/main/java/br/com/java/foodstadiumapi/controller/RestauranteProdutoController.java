@@ -34,7 +34,7 @@ public class RestauranteProdutoController {
     private ModelMapper modelMapper;
 
     @ApiOperation(value = "Listar produtos de um restaurante")
-    @GetMapping(value = "/restaurantes/produtos/{id}",produces="application/json", consumes="application/json")
+    @GetMapping(value = "/restaurantes/produtos/{id}")
     public List<RestauranteProdutoDTO> listarTudo(@PathVariable Long id){
       return paraListaModel(repository.findAllByRestauranteId(id));
     }
