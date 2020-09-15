@@ -1,5 +1,7 @@
 package br.com.java.foodstadiumapi.model;
 
+import br.com.java.foodstadiumapi.model.dto.ClienteLocalSetorBlocoDTO;
+import br.com.java.foodstadiumapi.model.dto.RestauranteProdutoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
