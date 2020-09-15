@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class CarrinhoDTO {
-
         private Long id;
         private ClienteLocalSetorBlocoDTO clienteLocalSetorBloco;
         private RestauranteProdutoDTO restauranteProduto;
         private int quantidade;
         private String observacao;
-
     }
