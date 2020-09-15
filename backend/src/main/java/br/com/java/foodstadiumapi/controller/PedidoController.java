@@ -57,7 +57,7 @@ public class PedidoController {
     
     @ApiOperation(value = "Listar pedidos realizados pelo cliente passando ID DO CLIENTE e status como parametro")
     @GetMapping(value = "/pedidos/listaPedidosRealizados/{id}")
-    public List<PedidoDTO> listaPedidosRealizados(@PathVariable Long id, @PathParam(value = "status") String status){
+    public List<PedidoDTO> listaPedidosRealizados(@PathVariable Long id, @RequestParam String status){
         List<Pedido> pedido = repository.findAllByStatus_NomeAndClienteLocalSetorBloco_Cliente(status, id);
         return paraListaDTO(pedido);
     }
