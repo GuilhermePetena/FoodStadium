@@ -4,6 +4,7 @@ import br.com.java.foodstadiumapi.model.*;
 import br.com.java.foodstadiumapi.repository.CarrinhoRepository;
 import br.com.java.foodstadiumapi.repository.ClienteLocalSetorBlocoRepository;
 import br.com.java.foodstadiumapi.repository.ClienteRepository;
+import br.com.java.foodstadiumapi.repository.RestauranteProdutoRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class CarrinhoController {
     private CarrinhoRepository carrinhoRepository;
     @Autowired
     private ClienteLocalSetorBlocoRepository clienteLocalSetorBlocoRepository;
+    @Autowired
+    private RestauranteProdutoRepository restauranteProdutoRepository;
 
     @ApiOperation(value = "Detalhar carrinho")
     @GetMapping("/carrinho/{id}")
@@ -30,13 +33,22 @@ public class CarrinhoController {
         return carrinhoRepository.findById(id);
     }
 
+    @ApiOperation(value = "Detalhar carrinho passando id do cliente como parametro")
+    @GetMapping("/carrinho/cliente/{id}")
+    public List<Carrinho> detalharCliente(@PathVariable Long id){
+        return carrinhoRepository.findByClienteLocalSetorBloco(id);
+    }
+
     @ApiOperation(value = "Cadastrar carrinho")
     @PostMapping("/carrinho")
     @ResponseStatus(HttpStatus.CREATED)
-    public Carrinho cadastrar(@RequestBody Carrinho carrinho, UriComponentsBuilder uriBuilder) throws Exception {
+    public Carrinho cadastrar(@RequestBody Carrinho carrinho) throws Exception {
         ClienteLocalSetorBloco clienteLocalSetorBloco = clienteLocalSetorBlocoRepository.findById(carrinho.getClienteLocalSetorBloco().getId())
                 .orElseThrow(Exception::new);
+        RestauranteProduto restauranteProduto = restauranteProdutoRepository.findById(carrinho.getRestauranteProduto().getId())
+                .orElseThrow(Exception::new);
         carrinho.setClienteLocalSetorBloco(clienteLocalSetorBloco);
+        carrinho.setRestauranteProduto(restauranteProduto);
         return carrinhoRepository.save(carrinho);
     }
 
@@ -46,7 +58,8 @@ public class CarrinhoController {
         return carrinhoRepository.findById(id)
                 .map(carrinho -> {
                     carrinho.setObservacao(novoCarrinho.getObservacao());
-                    carrinho.setPreco(novoCarrinho.getPreco());
+                    carrinho.setQuantidade(novoCarrinho.getQuantidade());
+                    carrinho.setRestauranteProduto(novoCarrinho.getRestauranteProduto());
                     return carrinhoRepository.save(carrinho);
                 })
                 .orElseGet(() -> {

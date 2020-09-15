@@ -9,6 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 @Entity
 public class Carrinho {
     @Id
@@ -16,8 +17,9 @@ public class Carrinho {
     private Long id;
     @ManyToOne
     private ClienteLocalSetorBloco clienteLocalSetorBloco;
-    private String nomeProduto;
-    private double preco;
+    @ManyToOne
+    private RestauranteProduto restauranteProduto;
     private int quantidade;
     private String observacao;
+
 }
