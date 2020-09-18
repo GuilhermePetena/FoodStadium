@@ -77,10 +77,16 @@ public class CarrinhoController {
                 });
     }
 
-    @ApiOperation(value = "Deletar carrinho")
-    @DeleteMapping("/carrinho/{id}")
-    void deletar(@PathVariable Long id) {
-        carrinhoRepository.deleteById(id);
+    @ApiOperation(value = "Deletar carrinho por Pessoa")
+    @DeleteMapping("/carrinho/pessoa/{id}")
+    void deletarPessoa(@PathVariable Long id) {
+        carrinhoRepository.deletarPessoa(id);
+    }
+
+    @ApiOperation(value = "Deletar carrinho por Produto")
+    @DeleteMapping("/carrinho/pessoa/{id}/produto/{id2}")
+    void deletarProduto(@PathVariable Long id, @PathVariable Long id2) {
+        carrinhoRepository.deletarProduto(id, id2);
     }
 
     private CarrinhoDTO paraDTO(Carrinho carrinho){
