@@ -21,7 +21,7 @@ public class Usuario {
     private String email;
     @NotNull
     private String senha;
-    @OneToOne @JsonIgnore
+    @OneToOne
     private Perfil perfil;
 
 }
