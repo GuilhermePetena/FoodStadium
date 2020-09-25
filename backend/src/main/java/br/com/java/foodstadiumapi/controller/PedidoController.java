@@ -55,6 +55,16 @@ public class PedidoController {
         return paraListaDTO(pedidos);
     }
     
+    @ApiOperation(value = "Detalhe pedido em andamento pelo entregador para entrega")
+    @GetMapping(value = "/pedidos/{idPedido}/listaDetalhes/{id}")
+    public List<PedidoDTO> detalhesPedidosEmAndamentoEntregador(@PathVariable Long id, @PathVariable Long idPedido){
+        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregadorLocalSetorId("ATRIBUIDO","ENTREGAR",id, idPedido);
+        List<Pedido> pedidos = pedido.stream()
+                .filter(pedido1 -> pedido1.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(pedido1.getRestauranteLocalSetor().getLocalSetor().getId()))
+                .collect(Collectors.toList());
+        return paraListaDTO(pedidos);
+    }
+    
     @ApiOperation(value = "Listar pedidos realizados pelo cliente passando ID DO CLIENTE e status como parametro")
     @GetMapping(value = "/pedidos/listaPedidosRealizados/{id}")
     public List<PedidoDTO> listaPedidosRealizados(@PathVariable Long id, @RequestParam String status){
