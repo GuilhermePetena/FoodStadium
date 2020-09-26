@@ -18,6 +18,7 @@ public class PedidoDTO {
     private LocalTime hora;
     private int avaliacaoEntregador;
     private int avaliacaoPedido;
+    private double valorTotal;
     private Status status;
     private TipoEntrega tipoEntrega;
     private ClienteLocalSetorBlocoDTO clienteLocalSetorBloco;

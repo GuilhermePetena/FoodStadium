@@ -84,7 +84,7 @@ public class PedidoController {
 
 
     @ApiOperation(value = "Detalhar pedido")
-    @GetMapping(value = "/pedidos/{id}",produces="application/json", consumes="application/json")
+    @GetMapping(value = "/pedidos/{id}")
     public ResponseEntity<PedidoDTO> detalhar(@PathVariable Long id){
         Optional<Pedido> optional = repository.findById(id);
         if (optional.isPresent()){
@@ -110,6 +110,7 @@ public class PedidoController {
         Status status = statusRepository.findById(pedidoForm.getStatus().getId())
                 .orElseThrow(Exception::new);
         pedido.setStatus(status);
+        pedido.setValorTotal(pedidoForm.getValorTotal());
         pedido.setTipoEntrega(tipoEntrega);
         pedido.setClienteLocalSetorBloco(clienteLocalSetorBloco);
         pedido.setEntregadorLocalSetor(entregadorLocalSetor);
@@ -136,6 +137,7 @@ public class PedidoController {
                 .orElseThrow(Exception::new);
         pedido.setStatus(status);
         pedido.setTipoEntrega(tipoEntrega);
+        pedido.setValorTotal(novoPedido.getValorTotal());
         pedido.setClienteLocalSetorBloco(clienteLocalSetorBloco);
         pedido.setEntregadorLocalSetor(entregadorLocalSetor);
         pedido.setRestauranteLocalSetor(restauranteLocalSetor);

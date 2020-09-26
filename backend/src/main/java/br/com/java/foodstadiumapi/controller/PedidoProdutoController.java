@@ -36,6 +36,12 @@ public class PedidoProdutoController {
         return paraListaDTO(repository.findAll());
     }
 
+    @ApiOperation(value = "Listar pedidosProduto apartir do ID do pedido ")
+    @GetMapping("/pedidos/{id}/produtos")
+    public List<PedidoProdutoDTO> listarPedidoProduto(@PathVariable Long id){
+        return paraListaDTO(repository.findAllByPedido_Id(id));
+    }
+
     @ApiOperation(value = "Detalhar pedido com produtos")
     @GetMapping("/pedidos/produtos/{id}")
     public ResponseEntity<PedidoProdutoDTO> detalhar(@PathVariable Long id){

@@ -21,6 +21,7 @@ public class Pedido {
     private LocalTime hora;
     private int avaliacaoEntregador;
     private int avaliacaoPedido;
+    private double valorTotal;
     @ManyToOne
     private ClienteLocalSetorBloco clienteLocalSetorBloco;
     @ManyToOne
@@ -31,4 +32,5 @@ public class Pedido {
     private EntregadorLocalSetor entregadorLocalSetor;
     @ManyToOne
     private Status status;
+
 }

@@ -19,6 +19,7 @@ public class PedidoForm {
     private Long id;
     private int avaliacaoEntregador;
     private int avaliacaoPedido;
+    private double valorTotal;
     private Status status;
     private TipoEntrega tipoEntrega;
     private ClienteLocalSetorBlocoForm clienteLocalSetorBloco;
