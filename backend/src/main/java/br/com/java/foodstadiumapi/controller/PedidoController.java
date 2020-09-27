@@ -46,7 +46,7 @@ public class PedidoController {
     }
 
     @ApiOperation(value = "Listar pedidos disponiveis para entrega")
-    @GetMapping(value = "/pedidos/listaDisponiveis",produces="application/json", consumes="application/json")
+    @GetMapping(value = "/pedidos/listaDisponiveis")
     public List<PedidoDTO> listarDisponiveis(){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("ABERTO","ENTREGAR");
         List<Pedido> pedidos = pedido.stream()
