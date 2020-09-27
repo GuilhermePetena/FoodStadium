@@ -50,10 +50,11 @@ public class PedidoController {
     public List<PedidoDTO> listarDisponiveis(){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("ABERTO","ENTREGAR");
         List<Pedido> pedidos = pedido.stream()
-              .filter(pedido1 -> pedido1.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(pedido1.getRestauranteLocalSetor().getLocalSetor().getId()))
+              .filter(pedido1 -> pedido1.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(pedido1.getEntregadorLocalSetor().getLocalSetor().getId()))
               .collect(Collectors.toList());
         return paraListaDTO(pedidos);
     }
+
     
     @ApiOperation(value = "Detalhe pedido em andamento pelo entregador para entrega")
     @GetMapping(value = "/pedidos/{idPedido}/listaDetalhes/{id}")
@@ -73,13 +74,17 @@ public class PedidoController {
     }
 
     @ApiOperation(value = "Listar pedidos entregues por um entregador")
-    @GetMapping(value = "/pedidos/listaEntregados/{id}",produces="application/json", consumes="application/json")
+    @GetMapping(value = "/pedidos/listaEntregados/{id}")
     public List<PedidoDTO> listarEntregues(@PathVariable Long id){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregador("ENTREGUE","ENTREGAR", id);
-        List<Pedido> pedidos = pedido.stream()
-                .filter(pedido1 -> pedido1.getEntregadorLocalSetor().getEntregador().getId().equals(id))
-                .collect(Collectors.toList());
-        return paraListaDTO(pedidos);
+        return paraListaDTO(pedido);
+    }
+
+    @ApiOperation(value = "Listar pedidos entregues pelo restaurante")
+    @GetMapping(value = "/pedidos/listaEntregadosRestaurante/{id}")
+    public List<PedidoDTO> listarEntreguesRestaurante(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("ENTREGUE", id);
+        return paraListaDTO(pedido);
     }
 
 
