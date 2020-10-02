@@ -52,6 +52,14 @@ public class EntregadorLocalSetorController {
         return ResponseEntity.notFound().build();
     }
 
+    @ApiOperation(value = "Detalhar local do entregador buscando pelo ID DO ENTREGADOR")
+    @GetMapping("/entregadores/local/entregador/{id}")
+    public ResponseEntity<EntregadorLocalSetorDTO> detalhes2(@PathVariable Long id) {
+        EntregadorLocalSetor entregadorLocalSetor = repository.findByEntregador_Id(id);
+        EntregadorLocalSetorDTO entregadorLocalSetorDTO = paraModel(entregadorLocalSetor);
+        return ResponseEntity.ok(entregadorLocalSetorDTO);
+    }
+
     @ApiOperation(value = "Cadastrar local do entregador")
     @PostMapping(value = "entregadores/local",produces="application/json", consumes="application/json")
     @ResponseStatus(HttpStatus.CREATED)

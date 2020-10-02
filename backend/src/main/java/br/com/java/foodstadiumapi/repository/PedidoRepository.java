@@ -16,4 +16,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findAllbyStatusAndTipoEntregaAndEntregador(String status, String tipo, Long id);
     @Query(value = "SELECT * FROM PEDIDO AS P JOIN STATUS AS S ON P.STATUS_ID = S.ID JOIN CLIENTE_LOCAL_SETOR_BLOCO AS CLSB ON P.CLIENTE_LOCAL_SETOR_BLOCO_ID = CLSB.ID WHERE S.NOME = ? AND CLSB.CLIENTE_ID = ?",nativeQuery = true)
     List<Pedido> findAllByStatus_NomeAndClienteLocalSetorBloco_Cliente(String status, Long id);
+    List<Pedido> findAllByStatusEqualsAndRestauranteLocalSetor_Id(String status, Long id);
 }

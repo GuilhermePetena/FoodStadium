@@ -43,7 +43,7 @@ public class UsuarioController {
             return ResponseEntity.badRequest().build();
         }
         else {
-            return ResponseEntity.ok().body("Usuario existe");
+            return ResponseEntity.ok().body("Usuario existe \n id = "+usuario.get().getId());
         }
     }
 

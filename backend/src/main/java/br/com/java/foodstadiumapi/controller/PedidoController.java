@@ -46,16 +46,16 @@ public class PedidoController {
     }
 
     @ApiOperation(value = "Listar pedidos disponiveis para entrega")
-    @GetMapping(value = "/pedidos/listaDisponiveis")
-    public List<PedidoDTO> listarDisponiveis(){
-        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("ABERTO","ENTREGAR");
+    @GetMapping(value = "/pedidos/listaDisponiveis/{id}")
+    public List<PedidoDTO> listarDisponiveis(@PathVariable Long id) throws Exception {
+        EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(id).orElseThrow(Exception::new);
+        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("PREPARANDO", "ENTREGUE");
         List<Pedido> pedidos = pedido.stream()
-              .filter(pedido1 -> pedido1.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(pedido1.getEntregadorLocalSetor().getLocalSetor().getId()))
-              .collect(Collectors.toList());
-        return paraListaDTO(pedidos);
+                .filter(pedido2 -> pedido2.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(entregadorLocalSetor.getLocalSetor().getId()))
+                .collect(Collectors.toList());
+        return paraListaDTO(pedido);
     }
 
-    
     @ApiOperation(value = "Detalhe pedido em andamento pelo entregador para entrega")
     @GetMapping(value = "/pedidos/{idPedido}/listaDetalhes/{id}")
     public List<PedidoDTO> detalhesPedidosEmAndamentoEntregador(@PathVariable Long id, @PathVariable Long idPedido){
@@ -77,6 +77,13 @@ public class PedidoController {
     @GetMapping(value = "/pedidos/listaEntregados/{id}")
     public List<PedidoDTO> listarEntregues(@PathVariable Long id){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregador("ENTREGUE","ENTREGAR", id);
+        return paraListaDTO(pedido);
+    }
+
+    @ApiOperation(value = "Listar pedidos aceitar restaurante")
+    @GetMapping(value = "/pedidos/listaAceitar/{id}")
+    public List<PedidoDTO> listarAceitarRestaurante(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("ABERTO", id);
         return paraListaDTO(pedido);
     }
 

@@ -21,4 +21,5 @@ public class EntregadorLocalSetor {
     private Entregador entregador;
     @ManyToOne
     private LocalSetor localSetor;
+
 }

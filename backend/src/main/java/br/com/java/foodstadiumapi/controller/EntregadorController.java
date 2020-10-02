@@ -35,6 +35,12 @@ public class EntregadorController {
         return entregadorRepository.findById(id);
     }
 
+    @ApiOperation(value = "Detalhe entregador pesquisa por ID USUARIO")
+    @GetMapping("/entregadores/usuario/{id}")
+    public Entregador detalhar2(@PathVariable Long id){
+        return entregadorRepository.findByUsuario_Id(id);
+    }
+
     @ApiOperation(value = "Cadastrar entregador")
     @PostMapping("/entregadores")
     public ResponseEntity<Entregador> cadastrar(@RequestBody Entregador entregador, UriComponentsBuilder uriBuilder) throws Exception {
