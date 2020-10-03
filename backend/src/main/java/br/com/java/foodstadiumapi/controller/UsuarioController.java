@@ -40,10 +40,10 @@ public class UsuarioController {
     public ResponseEntity validar(@RequestParam String email, String senha){
         Optional<Usuario> usuario = usuarioRepository.findByEmailAndSenha(email, senha);
         if(!usuario.isPresent()){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("USUÁRIO NÃO EXISTE OU INVALIDO");
         }
         else {
-            return ResponseEntity.ok().body("Usuario existe \n id = "+usuario.get().getId());
+            return ResponseEntity.ok().body(usuario);
         }
     }
 
