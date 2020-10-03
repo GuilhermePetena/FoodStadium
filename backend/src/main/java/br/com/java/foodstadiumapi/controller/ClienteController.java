@@ -35,6 +35,12 @@ public class ClienteController {
         return clienteRepository.findById(id);
     }
 
+    @ApiOperation(value = "Detalhar cliente pelo ID USUARIO")
+    @GetMapping("/clientes/usuario/{id}")
+    public Cliente detalhar2(@PathVariable Long id){
+        return clienteRepository.findByUsuario_Id(id);
+    }
+
     @ApiOperation(value = "Cadastrar cliente")
     @PostMapping("/clientes")
     public ResponseEntity<Cliente> cadastrar(@RequestBody Cliente cliente,  UriComponentsBuilder uriBuilder) throws Exception {
