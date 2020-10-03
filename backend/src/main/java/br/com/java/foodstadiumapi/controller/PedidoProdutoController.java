@@ -42,6 +42,24 @@ public class PedidoProdutoController {
         return paraListaDTO(repository.findAllByPedido_Id(id));
     }
 
+    @ApiOperation(value = "Listar pedidosProduto para aceitar (restaurante)apartir do ID do restaurante_local_setor ")
+    @GetMapping("/pedidos/restauranteAceitar/{id}")
+    public List<PedidoProdutoDTO> listarPedidoProdutoAceitar(@PathVariable Long id){
+        return paraListaDTO(repository.findAllByPedido_Status_NomeAndPedido_RestauranteLocalSetor_Id("ABERTO",id));
+    }
+
+    @ApiOperation(value = "Listar pedidosProduto entregues (restaurante)apartir do ID do restaurante_local_setor ")
+    @GetMapping("/pedidos/restauranteEntregues/{id}")
+    public List<PedidoProdutoDTO> listarPedidoProdutoEntregue(@PathVariable Long id){
+        return paraListaDTO(repository.findAllByPedido_Status_NomeAndPedido_RestauranteLocalSetor_Id("ENTREGUE",id));
+    }
+
+    @ApiOperation(value = "Listar pedidosProduto andamento (restaurante)apartir do ID do restaurante_local_setor ")
+    @GetMapping("/pedidos/restaurantePreparando/{id}")
+    public List<PedidoProdutoDTO> listarPedidoProdutoAndamento(@PathVariable Long id){
+        return paraListaDTO(repository.findAllByPedido_Status_NomeAndPedido_RestauranteLocalSetor_Id("PREPARANDO",id));
+    }
+
     @ApiOperation(value = "Detalhar pedido com produtos")
     @GetMapping("/pedidos/produtos/{id}")
     public ResponseEntity<PedidoProdutoDTO> detalhar(@PathVariable Long id){
