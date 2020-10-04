@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -15,9 +16,12 @@ public class LocalSetorBlocoController {
     @Autowired
     private LocalSetorBlocoRepository repository;
 
-    @ApiOperation(value = "Listar setor + bloco de um local")
+    @ApiOperation(value = "Listar setor + bloco de um  passando ID DO LOCAL_SETOR")
     @GetMapping("/locais/blocos/{id}")
     public List<LocalSetorBloco> listaDeDetalhesDoEstadio(@PathVariable Long id){
-        return repository.findByLocalNomeSetorBloco(id);
+        List<LocalSetorBloco> localSetorBlocos = repository.findByLocalNomeSetorBloco(id);
+        return localSetorBlocos.stream()
+                .filter(localSetorBloco -> localSetorBloco.getLocalSetor().getId().equals(id))
+                .collect(Collectors.toList());
     }
 }
