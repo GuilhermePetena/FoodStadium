@@ -49,7 +49,7 @@ public class PedidoController {
     @GetMapping(value = "/pedidos/listaDisponiveis/{id}")
     public List<PedidoDTO> listarDisponiveis(@PathVariable Long id) throws Exception {
         EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(id).orElseThrow(Exception::new);
-        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("PREPARANDO", "ENTREGUE");
+        List<Pedido> pedido = repository.findAllByStatus_IdAndAndTipoEntrega_Id(Long.parseLong("2"), Long.parseLong("2"));
         List<Pedido> pedidos = pedido.stream()
                 .filter(pedido2 -> pedido2.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(entregadorLocalSetor.getLocalSetor().getId()))
                 .collect(Collectors.toList());
