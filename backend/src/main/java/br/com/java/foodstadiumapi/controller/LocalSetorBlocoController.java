@@ -19,9 +19,7 @@ public class LocalSetorBlocoController {
     @ApiOperation(value = "Listar setor + bloco de um  passando ID DO LOCAL_SETOR")
     @GetMapping("/locais/blocos/{id}")
     public List<LocalSetorBloco> listaDeDetalhesDoEstadio(@PathVariable Long id){
-        List<LocalSetorBloco> localSetorBlocos = repository.findByLocalNomeSetorBloco(id);
-        return localSetorBlocos.stream()
-                .filter(localSetorBloco -> localSetorBloco.getLocalSetor().getId().equals(id))
-                .collect(Collectors.toList());
+        return repository.findAllByLocalSetor_Id(id);
+
     }
 }
