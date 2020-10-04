@@ -41,6 +41,12 @@ public class ClienteLocalSetorBlocoController {
         return paraListaModel(repository.findAll());
     }
 
+    @ApiOperation(value = "Validar se o cliente tem localização do cliente")
+    @GetMapping("/clientes/validarlocalizacao/{id}")
+    public ClienteLocalSetorBlocoDTO detalhar(@PathVariable Long id) {
+        return paraModel(repository.findByCliente_Usuario_Id(id));
+    }
+
     @ApiOperation(value = "Detalhes do local do cliente")
     @GetMapping("/clientes/local/{id}")
     public ResponseEntity<ClienteLocalSetorBlocoDTO> detalhes(@PathVariable Long id) {
