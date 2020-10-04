@@ -98,12 +98,6 @@ public class ClienteLocalSetorBlocoController {
         repository.deleteById(id);
     }
 
-    @ApiOperation(value = "Deletar todos os locais do cliente")
-    @DeleteMapping("clientes/local/todos/{id}")
-    public void deletar2(@PathVariable Long id){
-        repository.deleteAllByCliente_Usuario_Id(id);
-    }
-
 
     private ClienteLocalSetorBlocoDTO paraModel(ClienteLocalSetorBloco clienteLocalSetorBloco){
         return modelMapper.map(clienteLocalSetorBloco, (Type) ClienteLocalSetorBlocoDTO.class);
