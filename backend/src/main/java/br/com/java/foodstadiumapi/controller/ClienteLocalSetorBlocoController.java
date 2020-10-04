@@ -43,8 +43,8 @@ public class ClienteLocalSetorBlocoController {
 
     @ApiOperation(value = "Validar se o cliente tem localização do cliente")
     @GetMapping("/clientes/validarlocalizacao/{id}")
-    public ClienteLocalSetorBlocoDTO detalhar(@PathVariable Long id) {
-        return paraModel(repository.findByCliente_Usuario_Id(id));
+    public List<ClienteLocalSetorBlocoDTO> detalhar(@PathVariable Long id) {
+        return paraListaModel(repository.findAllByCliente_Usuario_Id(id));
     }
 
     @ApiOperation(value = "Detalhes do local do cliente")
@@ -98,6 +98,12 @@ public class ClienteLocalSetorBlocoController {
         repository.deleteById(id);
     }
 
+    @ApiOperation(value = "Deletar todos os locais do cliente")
+    @DeleteMapping("clientes/local/todos/{id}")
+    public void deletar2(@PathVariable Long id){
+        repository.deleteAllByCliente_Usuario_Id(id);
+    }
+
 
     private ClienteLocalSetorBlocoDTO paraModel(ClienteLocalSetorBloco clienteLocalSetorBloco){
         return modelMapper.map(clienteLocalSetorBloco, (Type) ClienteLocalSetorBlocoDTO.class);
@@ -110,4 +116,5 @@ public class ClienteLocalSetorBlocoController {
     private ClienteLocalSetorBloco paraEntity(ClienteLocalSetorBlocoForm clienteLocalSetorBlocoForm) {
         return modelMapper.map(clienteLocalSetorBlocoForm, ClienteLocalSetorBloco.class);
     }
+
 }
