@@ -55,9 +55,9 @@ public class PedidoController {
     }
 
     @ApiOperation(value = "Detalhe pedido em andamento pelo entregador para entrega")
-    @GetMapping(value = "/pedidos/{idPedido}/listaDetalhes/{id}")
+    @GetMapping(value = "/pedidos/listaDetalhes/{id}")
     public List<PedidoDTO> detalhesPedidosEmAndamentoEntregador(@PathVariable Long id, @PathVariable Long idPedido){
-        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregadorLocalSetorId("ATRIBUIDO","ENTREGAR",id, idPedido);
+        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregadorLocalSetorId("ATRIBUIDO","ENTREGAR",id);
         return paraListaDTO(pedido);
     }
     
