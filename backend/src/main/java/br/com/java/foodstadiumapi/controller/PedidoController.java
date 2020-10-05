@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.lang.reflect.Type;
-import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -60,10 +58,7 @@ public class PedidoController {
     @GetMapping(value = "/pedidos/{idPedido}/listaDetalhes/{id}")
     public List<PedidoDTO> detalhesPedidosEmAndamentoEntregador(@PathVariable Long id, @PathVariable Long idPedido){
         List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregadorLocalSetorId("ATRIBUIDO","ENTREGAR",id, idPedido);
-        List<Pedido> pedidos = pedido.stream()
-                .filter(pedido1 -> pedido1.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(pedido1.getRestauranteLocalSetor().getLocalSetor().getId()))
-                .collect(Collectors.toList());
-        return paraListaDTO(pedidos);
+        return paraListaDTO(pedido);
     }
     
     @ApiOperation(value = "Listar pedidos realizados pelo cliente passando ID DO CLIENTE e status como parametro")
