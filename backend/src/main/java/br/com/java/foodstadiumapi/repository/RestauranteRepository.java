@@ -1,5 +1,6 @@
 package br.com.java.foodstadiumapi.repository;
 
+import br.com.java.foodstadiumapi.model.Local;
 import br.com.java.foodstadiumapi.model.Restaurante;
 import br.com.java.foodstadiumapi.model.RestauranteProduto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,6 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
 
     @Query(value = "SELECT * FROM RESTAURANTE AS R JOIN CATEGORIA_RESTAURANTE AS CR  ON R.ID = R.CATEGORIA_RESTAURANTE_ID WHERE CR.NOME = 'LANCHE';", nativeQuery = true)
     List<Restaurante> findByCategoriaRestauranteNome(String nomeCategoria);
+
+    Restaurante findByUsuario_Id(Long id);
 }

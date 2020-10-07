@@ -58,6 +58,12 @@ public class RestauranteController {
         return repository.findById(id);
     }
 
+    @ApiOperation(value="Detalhar restaurante pelo USUARIO ID")
+    @GetMapping("/restaurantes/usuario/{id}")
+    public Restaurante detalhar2(@PathVariable Long id){
+        return repository.findByUsuario_Id(id);
+    }
+
     @ApiOperation(value="Atualizar restaurante")
     @PutMapping("/restaurantes/{id}")
     public Restaurante atualizar(@RequestBody Restaurante novoRestaurante, @PathVariable Long id){
