@@ -21,6 +21,9 @@ public class Cliente {
     private String sobrenome;
     private String telefone;
     private int idade;
+    private String numeroCartao;
+    private String cvv;
+    private String dataCartao;
     @ManyToOne
     private Usuario usuario;
 
