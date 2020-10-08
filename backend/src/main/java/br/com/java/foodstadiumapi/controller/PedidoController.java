@@ -132,8 +132,11 @@ public class PedidoController {
     @PutMapping(value = "/pedidos/{id}" ,produces="application/json", consumes="application/json")
     public PedidoDTO atualizar(@RequestBody PedidoForm novoPedido, @PathVariable Long id) throws Exception {
         Pedido pedido = paraEntity(novoPedido);
-        EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(pedido.getEntregadorLocalSetor().getId())
-                .orElseThrow(Exception::new);
+        if(pedido.getEntregadorLocalSetor() != null) {
+            EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(pedido.getEntregadorLocalSetor().getId())
+                    .orElseThrow(Exception::new);
+            pedido.setEntregadorLocalSetor(entregadorLocalSetor);
+        }
         ClienteLocalSetorBloco clienteLocalSetorBloco = clienteLocalSetorBlocoRepository.findById(pedido.getClienteLocalSetorBloco().getId())
                 .orElseThrow(Exception::new);
         RestauranteLocalSetor restauranteLocalSetor = restauranteLocalSetorRepository.findById(pedido.getRestauranteLocalSetor().getId())
@@ -146,7 +149,6 @@ public class PedidoController {
         pedido.setTipoEntrega(tipoEntrega);
         pedido.setValorTotal(novoPedido.getValorTotal());
         pedido.setClienteLocalSetorBloco(clienteLocalSetorBloco);
-        pedido.setEntregadorLocalSetor(entregadorLocalSetor);
         pedido.setRestauranteLocalSetor(restauranteLocalSetor);
         return repository.findById(id)
                 .map(pedidoClass -> {
