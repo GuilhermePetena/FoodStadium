@@ -75,6 +75,21 @@ public class PedidoController {
         return paraListaDTO(pedido);
     }
 
+    @ApiOperation(value = "Listar pedidos com status buscar por um entregador")
+    @GetMapping(value = "/pedidos/listaEntregados/{id}")
+    public List<PedidoDTO> listarBuscar(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregador("BUSCAR","ENTREGAR", id);
+        return paraListaDTO(pedido);
+    }
+
+    @ApiOperation(value = "Listar pedidos com status buscar por um cliente")
+    @GetMapping(value = "/pedidos/listaBuscarCliente/{id}")
+    public List<PedidoDTO> listarBuscar2(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndTipoEntrega_NomeAndClienteLocalSetorBloco_Id("BUSCAR","BUSCAR", id);
+        return paraListaDTO(pedido);
+    }
+
+
     @ApiOperation(value = "Listar pedidos aceitar restaurante")
     @GetMapping(value = "/pedidos/listaAceitar/{id}")
     public List<PedidoDTO> listarAceitarRestaurante(@PathVariable Long id){
@@ -86,6 +101,20 @@ public class PedidoController {
     @GetMapping(value = "/pedidos/listaEntregadosRestaurante/{id}")
     public List<PedidoDTO> listarEntreguesRestaurante(@PathVariable Long id){
         List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("ENTREGUE", id);
+        return paraListaDTO(pedido);
+    }
+
+    @ApiOperation(value = "Listar pedidos com status atribuido pelo restaurante")
+    @GetMapping(value = "/pedidos/listaAtribuidosRestaurante/{id}")
+    public List<PedidoDTO> listarAtribuidosRestaurante(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("ATRIBUIDO", id);
+        return paraListaDTO(pedido);
+    }
+
+    @ApiOperation(value = "Listar pedidos com status BUSCAR pelo restaurante")
+    @GetMapping(value = "/pedidos/listaBuscarRestaurante/{id}")
+    public List<PedidoDTO> listarBuscarRestaurante(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("BUSCAR", id);
         return paraListaDTO(pedido);
     }
 
