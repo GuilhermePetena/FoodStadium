@@ -75,6 +75,13 @@ public class PedidoController {
         return paraListaDTO(pedido);
     }
 
+    @ApiOperation(value = "Listar pedidos com status buscar por um entregador")
+    @GetMapping(value = "/pedidos/listaBuscarEntregador/{id}")
+    public List<PedidoDTO> listarBuscar(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregadorLocalSetorId("BUSCAR","ENTREGAR", id);
+        return paraListaDTO(pedido);
+    }
+
     @ApiOperation(value = "Listar pedidos com status buscar por um cliente")
     @GetMapping(value = "/pedidos/listaBuscarCliente/{id}")
     public List<PedidoDTO> listarBuscar2(@PathVariable Long id){
