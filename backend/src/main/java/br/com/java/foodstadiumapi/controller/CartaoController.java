@@ -25,11 +25,11 @@ public class CartaoController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    /*@ApiOperation(value = "Listar cartoes de um cliente")
+    @ApiOperation(value = "Listar cartoes de um cliente")
     @GetMapping("/cartao/cliente/{id}")
     public List<Cartao> listar(@PathVariable Long id){
-        return repository.findAllByClientes_Id(id);
-    }*/
+        return repository.findAllByCliente_Id(id);
+    }
 
     @ApiOperation(value = "Detalhar cartao")
     @GetMapping("/cartao/{id}")
