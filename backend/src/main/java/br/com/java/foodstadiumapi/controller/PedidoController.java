@@ -118,6 +118,15 @@ public class PedidoController {
         return paraListaDTO(pedido);
     }
 
+    @ApiOperation(value = "Listar pedidos com status BUSCAR e tipo de entrega BUSCAR pelo restaurante")
+    @GetMapping(value = "/pedidos/listaEntregaBuscarRestaurante/{id}")
+    public List<PedidoDTO> listarBuscarRestaurante2(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("BUSCAR", id);
+        return paraListaDTO(pedido).stream()
+                .filter(pedidos -> pedidos.getTipoEntrega().getNome().equals("BUSCAR"))
+                .collect(Collectors.toList());
+    }
+
 
     @ApiOperation(value = "Detalhar pedido")
     @GetMapping(value = "/pedidos/{id}")
