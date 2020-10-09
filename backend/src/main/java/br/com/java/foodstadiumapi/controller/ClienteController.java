@@ -62,9 +62,6 @@ public class ClienteController {
                     cliente.setCpf(novoCliente.getCpf());
                     cliente.setTelefone(novoCliente.getTelefone());
                     cliente.setIdade(novoCliente.getIdade());
-                    cliente.setNumeroCartao(novoCliente.getNumeroCartao());
-                    cliente.setCvv(novoCliente.getCvv());
-                    cliente.setDataCartao(novoCliente.getDataCartao());
                     return clienteRepository.save(cliente);
                 })
                 .orElseGet(() -> {

@@ -10,7 +10,4 @@ import lombok.NoArgsConstructor;
 public class ClienteDTO {
     private Long id;
     private String nome;
-    private String numeroCartao;
-    private String cvv;
-    private String dataCartao;
 }
