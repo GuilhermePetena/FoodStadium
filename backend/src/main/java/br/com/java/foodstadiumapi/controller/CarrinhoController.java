@@ -86,7 +86,7 @@ public class CarrinhoController {
     @ApiOperation(value = "Deletar carrinho por Produto")
     @DeleteMapping("/carrinho/pessoa/{id}/produto/{id2}")
     void deletarProduto(@PathVariable Long id, @PathVariable Long id2) {
-        carrinhoRepository.deletarProduto(id, id2);
+        carrinhoRepository.deletarProduto(id2, id);
     }
 
     private CarrinhoDTO paraDTO(Carrinho carrinho){
