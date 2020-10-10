@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EntregadorLocalSetorRepository extends JpaRepository<EntregadorLocalSetor, Long> {
-    EntregadorLocalSetor findByEntregador_Id(Long id);
+    List<EntregadorLocalSetor> findAllByEntregador_Usuario_Id(Long id);
 }

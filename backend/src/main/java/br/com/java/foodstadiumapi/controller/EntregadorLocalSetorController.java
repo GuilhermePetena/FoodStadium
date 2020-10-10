@@ -52,12 +52,10 @@ public class EntregadorLocalSetorController {
         return ResponseEntity.notFound().build();
     }
 
-    @ApiOperation(value = "Detalhar local do entregador buscando pelo ID DO ENTREGADOR")
+    @ApiOperation(value = "Lista Detalhar local do entregador buscando pelo ID DO USUARIO")
     @GetMapping("/entregadores/local/entregador/{id}")
-    public ResponseEntity<EntregadorLocalSetorDTO> detalhes2(@PathVariable Long id) {
-        EntregadorLocalSetor entregadorLocalSetor = repository.findByEntregador_Id(id);
-        EntregadorLocalSetorDTO entregadorLocalSetorDTO = paraModel(entregadorLocalSetor);
-        return ResponseEntity.ok(entregadorLocalSetorDTO);
+    public List<EntregadorLocalSetorDTO> detalhes2(@PathVariable Long id) {
+        return paraListaModel(repository.findAllByEntregador_Usuario_Id(id));
     }
 
     @ApiOperation(value = "Cadastrar local do entregador")
