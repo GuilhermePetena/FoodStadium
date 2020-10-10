@@ -1,10 +1,12 @@
 package br.com.java.foodstadiumapi.controller;
 
+import br.com.java.foodstadiumapi.model.ClienteLocalSetorBloco;
 import br.com.java.foodstadiumapi.model.LocalSetor;
 import br.com.java.foodstadiumapi.model.Restaurante;
 import br.com.java.foodstadiumapi.model.RestauranteLocalSetor;
 import br.com.java.foodstadiumapi.model.dto.RestauranteLocalSetorDTO;
 import br.com.java.foodstadiumapi.model.form.RestauranteLocalSetorForm;
+import br.com.java.foodstadiumapi.repository.ClienteLocalSetorBlocoRepository;
 import br.com.java.foodstadiumapi.repository.LocalSetorRepository;
 import br.com.java.foodstadiumapi.repository.RestauranteLocalSetorRepository;
 import br.com.java.foodstadiumapi.repository.RestauranteRepository;
@@ -31,12 +33,25 @@ public class RestauranteLocalSetorController {
     @Autowired
     private RestauranteRepository restauranteRepository;
     @Autowired
+    private ClienteLocalSetorBlocoRepository clienteLocalSetorBlocoRepository;
+    @Autowired
     private ModelMapper modelMapper;
 
     @ApiOperation(value = "Listar local dos restaurantes")
     @GetMapping("/restaurantes/local")
     public List<RestauranteLocalSetorDTO> listar() {
         return paraListaModel(repository.findAll());
+    }
+
+    @ApiOperation(value="Listar restaurantes no setor do cliente")
+    @GetMapping("/restaurantes/clientelocalsetor/{id}")
+    public List<RestauranteLocalSetor> listar2(@PathVariable Long id) throws Exception {
+        ClienteLocalSetorBloco clienteLocalSetorBloco = clienteLocalSetorBlocoRepository.findById(id)
+                .orElseThrow(Exception::new);
+        List<RestauranteLocalSetor> restaurantes = repository.findAll();
+        return restaurantes.stream()
+                .filter(restaurante -> clienteLocalSetorBloco.getLocalSetorBloco().getLocalSetor().getId().equals(restaurante.getLocalSetor().getId()))
+                .collect(Collectors.toList());
     }
 
     @ApiOperation(value = "Detalhar local do restaurante")

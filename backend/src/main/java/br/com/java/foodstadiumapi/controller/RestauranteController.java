@@ -30,6 +30,7 @@ public class RestauranteController {
         return repository.findAll();
     }
 
+
     @ApiOperation(value="Listar restaurantes por nome")
     @GetMapping("/restaurantes/nome")
     public List<Restaurante> listarPorNomeRestaurante(@PathParam(value = "nomeRestaurante") String nomeRestaurante){
