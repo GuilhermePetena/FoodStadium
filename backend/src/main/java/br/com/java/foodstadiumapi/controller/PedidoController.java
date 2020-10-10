@@ -77,9 +77,12 @@ public class PedidoController {
 
     @ApiOperation(value = "Listar pedidos com status buscar por um entregador")
     @GetMapping(value = "/pedidos/listaBuscarEntregador/{id}")
-    public List<PedidoDTO> listarBuscar(@PathVariable Long id){
-        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregadorLocalSetorId("BUSCAR","ENTREGAR", id);
-        return paraListaDTO(pedido);
+    public List<PedidoDTO> listarBuscar(@PathVariable Long id) throws Exception {
+        EntregadorLocalSetor entregadorLocalSetor = entregadorLocalSetorRepository.findById(id).orElseThrow(Exception::new);
+        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntrega("BUSCAR","ENTREGAR");
+        return paraListaDTO(pedido).stream()
+                .filter(pedidoDT -> pedidoDT.getClienteLocalSetorBloco().getLocalSetorBloco().getLocalSetor().getId().equals(entregadorLocalSetor.getLocalSetor().getId()))
+                .collect(Collectors.toList());
     }
 
     @ApiOperation(value = "Listar pedidos com status buscar por um cliente")
@@ -94,6 +97,12 @@ public class PedidoController {
     @GetMapping(value = "/pedidos/listaAceitar/{id}")
     public List<PedidoDTO> listarAceitarRestaurante(@PathVariable Long id){
         List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("ABERTO", id);
+        return paraListaDTO(pedido);
+    }
+    @ApiOperation(value = "Listar pedidos aceitar Preparando restaurante")
+    @GetMapping(value = "/pedidos/listaAceitarPreparando/{id}")
+    public List<PedidoDTO> listarAceitarRestaurante2(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndRestauranteLocalSetor_Id("PREPARANDO", id);
         return paraListaDTO(pedido);
     }
 
