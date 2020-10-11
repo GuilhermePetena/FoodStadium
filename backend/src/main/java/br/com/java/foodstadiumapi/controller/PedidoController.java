@@ -53,6 +53,13 @@ public class PedidoController {
                 .collect(Collectors.toList());
         return paraListaDTO(pedido);
     }
+    @ApiOperation(value = "Lista pedido em andamento pelo cliente para entrega")
+    @GetMapping(value = "/pedidos/listaandamento/{id}")
+    public List<PedidoDTO> listasPedidosEmAndamentoCliente(@PathVariable Long id){
+        List<Pedido> pedido = repository.findAllByStatus_NomeOrStatus_NomeOrStatus_NomeAndClienteLocalSetorBloco_Cliente_Id("PREPARANDO","ABERTO","BUSCAR",id);
+        return paraListaDTO(pedido);
+    }
+
 
     @ApiOperation(value = "Detalhe pedido em andamento pelo entregador para entrega")
     @GetMapping(value = "/pedidos/listaDetalhes/{id}")

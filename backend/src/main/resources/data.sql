@@ -15,25 +15,25 @@ INSERT INTO TIPO_ENTREGA(NOME) VALUES ('ENTREGAR');
 
 
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('GUILHERME@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MARCELLO@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('dominos@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('TADAO@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ALAN@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('JUBILEU@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('pizzahut@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('TAGOD@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ALAN@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ROBERTO@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('nakato@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MARIA@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('JOAO@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('JOSE@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('china@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MATIAS@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ANA@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ZILDA@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('bk@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MARCOS@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('BRUNO@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('PEDRO@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('subway@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('NATAN@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('RENAN@GMAIL.COM', 'FIAP01',1);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('NICOLAS@GMAIL.COM', 'FIAP01',2);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('habbibs@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('FELIPE@GMAIL.COM', 'FIAP01',3);
 
 

@@ -1,9 +1,12 @@
 package br.com.java.foodstadiumapi.repository;
 
 import br.com.java.foodstadiumapi.model.Pedido;
+import br.com.java.foodstadiumapi.model.Produto;
+import br.com.java.foodstadiumapi.model.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
@@ -19,4 +22,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findAllByStatus_NomeAndClienteLocalSetorBloco_Cliente(String status, Long id);
     List<Pedido> findAllByStatusEqualsAndRestauranteLocalSetor_Id(String status, Long id);
     List<Pedido> findAllByStatus_NomeAndAndTipoEntrega_NomeAndClienteLocalSetorBloco_Id(String status, String entrega, Long id);
+    List<Pedido> findAllByStatus_NomeOrStatus_NomeOrStatus_NomeAndClienteLocalSetorBloco_Cliente_Id(String preparando, String aberto, String buscar, Long id);
 }
