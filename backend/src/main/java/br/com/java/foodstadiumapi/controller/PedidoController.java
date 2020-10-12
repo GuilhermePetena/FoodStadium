@@ -78,7 +78,7 @@ public class PedidoController {
     @ApiOperation(value = "Listar pedidos entregues por um entregador")
     @GetMapping(value = "/pedidos/listaEntregados/{id}")
     public List<PedidoDTO> listarEntregues(@PathVariable Long id){
-        List<Pedido> pedido = repository.findAllbyStatusAndTipoEntregaAndEntregador("ENTREGUE","ENTREGAR", id);
+        List<Pedido> pedido = repository.findAllByStatus_NomeAndAndTipoEntrega_NomeAndAndEntregadorLocalSetor_Entregador_Id("ENTREGUE","ENTREGAR", id);
         return paraListaDTO(pedido);
     }
 
