@@ -14,19 +14,19 @@ INSERT INTO TIPO_ENTREGA(NOME) VALUES ('BUSCAR');
 INSERT INTO TIPO_ENTREGA(NOME) VALUES ('ENTREGAR');
 
 
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('GUILHERME@GMAIL.COM', 'FIAP01',1);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('gui@gmail.com', 'fiap',1);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('dominos@gmail.com', 'fiap',2);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('TADAO@GMAIL.COM', 'FIAP01',3);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ALAN@GMAIL.COM', 'FIAP01',1);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('tadao@gmail.com', 'fiap',3);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('alan@gmail.com', 'fiap',1);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('pizzahut@gmail.com', 'fiap',2);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('TAGOD@GMAIL.COM', 'FIAP01',3);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ALAN@GMAIL.COM', 'FIAP01',1);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('tagod@gmail.com', 'fiap',3);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('alan@gmail.com', 'fiap',1);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('nakato@gmail.com', 'fiap',2);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MARIA@GMAIL.COM', 'FIAP01',3);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('JOAO@GMAIL.COM', 'FIAP01',1);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('maria@gmail.com', 'fiap',3);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('joao@gmail.com', 'fiap',1);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('china@gmail.com', 'fiap',2);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MATIAS@GMAIL.COM', 'FIAP01',3);
-INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ANA@GMAIL.COM', 'FIAP01',1);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('matias@gmail.com', 'fiap',3);
+INSERT INTO USUARIO(email, senha,perfil_id) VALUES('ANA@GMAIL.COM', 'fiap',1);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('bk@gmail.com', 'fiap',2);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('MARCOS@GMAIL.COM', 'FIAP01',3);
 INSERT INTO USUARIO(email, senha,perfil_id) VALUES('BRUNO@GMAIL.COM', 'FIAP01',1);
@@ -57,6 +57,8 @@ INSERT INTO CLIENTE(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('13
 INSERT INTO CLIENTE(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('161718','Maria','Souza', '1234-4668', 38,13);
 INSERT INTO CLIENTE(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('192021','Carlos','Andrade', '1234-7816', 47,16);
 INSERT INTO CLIENTE(cpf,nome, sobrenome, telefone, idade, usuario_id) VALUES('212223','Gustavo','Henrique', '1234-9875', 19,19);
+
+INSERT INTO CARTAO(CVV,DATA_CARTAO,NUMERO_CARTAO, CLIENTE_ID) VALUES('333','10/10/2030','123343542562',1);
 
 
 INSERT INTO RESTAURANTE(cnpj,nome, email, telefone, imagem, usuario_id, categoria_restaurante_id) VALUES('123123','DOMINOS','DOMINOS@TOP.COM','1234-1234','https://www.fam.br/wp-content/uploads/2019/04/dominos.png', 2,8);
