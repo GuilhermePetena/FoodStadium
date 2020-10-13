@@ -56,7 +56,7 @@ public class PedidoController {
     @ApiOperation(value = "Lista pedido em andamento pelo cliente para entrega")
     @GetMapping(value = "/pedidos/listaandamento/{id}")
     public List<PedidoDTO> listasPedidosEmAndamentoCliente(@PathVariable Long id){
-        List<Pedido> pedido = repository.findAllByStatus_NomeOrStatus_NomeOrStatus_NomeAndClienteLocalSetorBloco_Cliente_Id("PREPARANDO","ABERTO","BUSCAR",id);
+        List<Pedido> pedido = repository.findAllByStatus_NomeOrStatus_NomeOrStatus_NomeOrStatus_NomeAndClienteLocalSetorBloco_Cliente_Id("PREPARANDO","ABERTO","BUSCAR","ATRIBUIDO",id);
         return paraListaDTO(pedido);
     }
 

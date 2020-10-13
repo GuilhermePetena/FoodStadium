@@ -22,5 +22,5 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> findAllByStatus_NomeAndClienteLocalSetorBloco_Cliente(String status, Long id);
     List<Pedido> findAllByStatusEqualsAndRestauranteLocalSetor_Id(String status, Long id);
     List<Pedido> findAllByStatus_NomeAndAndTipoEntrega_NomeAndClienteLocalSetorBloco_Id(String status, String entrega, Long id);
-    List<Pedido> findAllByStatus_NomeOrStatus_NomeOrStatus_NomeAndClienteLocalSetorBloco_Cliente_Id(String preparando, String aberto, String buscar, Long id);
+    List<Pedido> findAllByStatus_NomeOrStatus_NomeOrStatus_NomeOrStatus_NomeAndClienteLocalSetorBloco_Cliente_Id(String preparando, String aberto, String buscar, String atribuido, Long id);
 }
